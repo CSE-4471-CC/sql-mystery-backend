@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, request, jsonify;
-from app.db get db
+from app.db import get_db
 
 # lines 5-33 written by Lia Ferguson
 bp = Blueprint('endpoints', __name__, url_prefix='/endpoints')
@@ -21,12 +21,12 @@ def login_query():
   response = {}
   if len(query_result) == NUM_RECORDS_USER_TABLE:
     response = {
-      'status': 'SUCCESS'
+      'status': 'SUCCESS',
       'message': 'Congratulations! You successfully used SQL Injection to bypass authentication.'
     }
   else:
     response = {
-      'status': 'ERROR'
+      'status': 'ERROR',
       'message': 'SQL Injection was not successful, please try again.'
     }
 

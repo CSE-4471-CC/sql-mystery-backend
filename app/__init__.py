@@ -4,6 +4,7 @@ import os
 
 from flask import Flask
 from . import db
+import app.api as api
 
 def create_app(test_config=None):
     # create and configure the app
