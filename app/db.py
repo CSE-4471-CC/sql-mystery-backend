@@ -41,5 +41,12 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
 
-
+  # uncomment line 45 when you are ready to implement the function
+  #if __name__ == '__main__':
+    # connect to database 
+    # call function get_initial_data for each data table to get data formatted properly for inserting into tables
+    # for loop - for tuple in data obj (returned from get_initial_data())
+    #               execute SQL query with tuple as data arguments
+    #               commit query to database
+ 
     

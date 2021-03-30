@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, request, jsonify;
 from app.db get db
 
 # lines 5-33 written by Lia Ferguson
-bp = Blueprint('endpoints', __name__, url_prefix='/')
+bp = Blueprint('endpoints', __name__, url_prefix='/endpoints')
 
 NUM_RECORDS_USERS_TABLE = 5 # replace this number with actual number of records in database
 

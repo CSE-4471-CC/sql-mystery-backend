@@ -28,13 +28,8 @@ def create_app(test_config=None):
 
     db.init_app(app)  # registers database with app
 
+    app.register_blueprint(api.endpoints.bp)
     return app
 
-  if __name__ == '__main__':
-    # connect to database 
-    # call function get_initial_data for each data table to get data formatted properly for inserting into tables
-    # for loop - for tuple in data obj (returned from get_initial_data())
-    #               execute SQL query with tuple as data arguments
-    #               commit query to database
- 
+
   
