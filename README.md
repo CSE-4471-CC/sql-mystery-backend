@@ -2,6 +2,7 @@
 
 This repository houses all of the backend API and database that will provide additional functionality to our SQL Murder Mystery game.
 
+
 ## How to get started
 1. Clone the repository to local machine
 2. Create a python virtual environment by running the following command: `python3 -m venv env`
@@ -18,3 +19,5 @@ This repository houses all of the backend API and database that will provide add
 
 
 **Important note: you will have to repeat steps 3-7 every time you start working on the project again after closing it out**
+
+**You have to have both the sql-murder-mystery react app and this backend server running in order to play the full game**
