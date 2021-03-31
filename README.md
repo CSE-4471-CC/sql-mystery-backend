@@ -17,4 +17,4 @@ This repository houses all of the backend API and database that will provide add
 
 
 
-**Important note: you will have to repeat steps 3-5 every time you start working on the project again after closing it out**
+**Important note: you will have to repeat steps 3-7 every time you start working on the project again after closing it out**
