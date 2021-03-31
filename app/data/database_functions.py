@@ -29,3 +29,18 @@ def get_initial_data(database):
 		for record in user_data:
 			database.execute(users_insert_query, record)
 			database.commit()
+
+def get_initial_data(database):
+	# path of USER_INFO table csv data
+	userinfo_data_path = DB_TABLE_DICT['USER_INFO']
+	# SQL query to insert records into user info table
+	userinfo_insert_query = 'INSERT into USER_INFO (User_ID, First_name, Last_name, Superhero_Name, Allergens) VALUES (? , ? , ? , ? , ?)'
+	# read in csv data
+	with open(userinfo_data_path, newline='\n') as csvfile:
+		userinfo_data = csv.reader(csvfile, delimiter=',')
+		# skip header row
+		next(userinfo_data, None)
+		# insert records into database
+		for record in user_data:
+			database.execute(userinfo_insert_query, record)
+			database.commit()		
