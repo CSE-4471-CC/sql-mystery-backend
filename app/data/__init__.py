@@ -1,1 +1,1 @@
-from database-functions import *
+from .database_functions import *
