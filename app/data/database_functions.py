@@ -41,6 +41,38 @@ def get_initial_data(database):
 		# skip header row
 		next(userinfo_data, None)
 		# insert records into database
-		for record in user_data:
+		for record in userinfo_data:
 			database.execute(userinfo_insert_query, record)
-			database.commit()		
+			database.commit()	
+
+def get_initial_data(database):
+	# path of PURCHASE_ORDERS table csv data
+	purchaseorders_data_path = DB_TABLE_DICT['PURCHASE_ORDERS']
+	# SQL query to insert records into purchase orders table
+	purchaseorders_insert_query = 'INSERT into PURCHASE_ORDERS (PO_NUMBER, USER_ID, ITEM, COST, DATE_RECIEVED, TIME_RECIEVED) VALUES (? , ? , ? , ? , ? , ?)'
+	# read in csv data
+	with open(purchaseorders_data_path, newline='\n') as csvfile:
+		purchaseorders_data = csv.reader(csvfile, delimiter=',')
+		# skip header row
+		next(purchaseorders_data, None)
+		# insert records into database
+		for record in purchaseorders_data:
+			database.execute(purchaseorders_insert_query, record)
+			database.commit()
+			
+def get_initial_data(database):
+	# path of BUILDING_ACCESS table csv data
+	buildingaccess_data_path = DB_TABLE_DICT['BUILDING_ACCESS']
+	# SQL query to insert records into building access table
+	buildingaccess_insert_query = 'INSERT into BUILDING_ACCESS (Building_ID, Building_date, Building_time, User_ID) VALUES (? , ? , ? , ? )'
+	# read in csv data
+	with open(buildingaccess_data_path, newline='\n') as csvfile:
+		buildingaccess_data = csv.reader(csvfile, delimiter=',')
+		# skip header row
+		next(buildingaccess_data, None)
+		# insert records into database
+		for record in buildingaccess_data:
+			database.execute(buildingaccess_insert_query, record)
+			database.commit()
+			
+			
