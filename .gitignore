@@ -2,3 +2,6 @@ __pycache__/
 env/
 .DS_Store
 instance/
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/sql-mystery-backend/v16/.suo
