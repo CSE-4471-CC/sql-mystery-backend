@@ -7,6 +7,7 @@ import json
 
 NUM_RECORDS_USERS_TABLE = 8
 
+# Edited and supplemeneted by Andrew Fecher
 bp = Blueprint('endpoints', __name__, url_prefix='/endpoints')
 
 
