@@ -45,7 +45,7 @@ def login_query():
 			i += 1
 			for row in table:
 				for element in row:
-					contents += str(element).replace('\n','/n').replace('\t','/t').replace('\r','/r') + 'tt\t'
+					contents += str(element).replace('\n','/n').replace('\t','/t').replace('\r','/r') + '\t'
 				contents += '\n'
 			contents += '\n\n'
 	else:
@@ -71,7 +71,7 @@ def login_query():
 			'login': 'ERROR',
 			'message': 'SQL Injection was not successful, please try again.'
 		}
-	print(contents)
+	#print(contents)
 	print(response)
 	print(user_id)
 	return jsonify(response)
