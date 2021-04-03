@@ -1,3 +1,5 @@
+# lines 5-46 written by Lia Ferguson
+# lines 49-91 written by Tom Chmura
 import csv
 
 # dictionary that maps table name to the path of the csv data to populate it
@@ -30,11 +32,24 @@ def get_initial_data(database):
 			database.execute(users_insert_query, record)
 			database.commit()
 
+	# path of QUESTIONNAIRE table csv data
+	questionnaire_data_path = DB_TABLE_DICT['QUESTIONNAIRE']
+	# SQL query to insert records into questionnaire table
+	questionnaire_insert_query = 'INSERT into QUESTIONNAIRE (User_ID, Favorite_food, Favorite_hobby, Favorite_drink, Allergies) VALUES (? , ? , ? , ?, ?)'
+	# read in csv data
+	with open(questionnaire_data_path, newline='\n') as csvfile:
+		questionnaire_data = csv.reader(csvfile, delimiter=',')
+		# skip header row
+		next(questionnaire_data, None)
+		# insert records into database
+		for record in questionnaire_data:
+			database.execute(questionnaire_insert_query, record)
+			database.commit()
 
 	# path of USER_INFO table csv data
 	userinfo_data_path = DB_TABLE_DICT['USER_INFO']
 	# SQL query to insert records into user info table
-	userinfo_insert_query = 'INSERT into USER_INFO (User_ID, First_name, Last_name, Superhero_Name, Allergens) VALUES (? , ? , ? , ? , ?)'
+	userinfo_insert_query = 'INSERT into USER_INFO (User_ID, First_name, Last_name, Superhero_Name) VALUES (? , ? , ? , ?)'
 	# read in csv data
 	with open(userinfo_data_path, newline='\n') as csvfile:
 		userinfo_data = csv.reader(csvfile, delimiter=',')
