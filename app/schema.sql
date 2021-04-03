@@ -37,8 +37,9 @@ FOREIGN KEY(User_ID) references USERS(User_ID));
 CREATE TABLE USER_INFO(
 User_ID INT NOT NULL,
 First_name VARCHAR(20) NOT NULL,
-Last_name VARCHAR(20) NOT NULL,
+Last_name VARCHAR(20),
 Superhero_Name VARCHAR(30),
+Allergens VARCHAR(30),
 PRIMARY KEY(User_ID)
 FOREIGN KEY(User_ID) references USERS(User_ID));
 
