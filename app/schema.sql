@@ -1,4 +1,5 @@
 --Written by Tom Chmura
+--small updates to USER_INFO and QUESTIONNAIRE tables by Lia Ferguson
 
 -- Table: BUILDING_ACCESS
 CREATE TABLE BUILDING_ACCESS(
@@ -50,13 +51,11 @@ PRIMARY KEY(User_ID));
 
 -- Table: PURCHASE_ORDERS
 CREATE TABLE PURCHASE_ORDERS (
-    PO_NUMBER     INT          NOT NULL,
-    USER_ID       INT          NOT NULL,
-    ITEM          VARCHAR (30) NOT NULL,
-    COST          DOUBLE       NOT NULL,
-    DATE_RECIEVED DATE,
-    TIME_RECIEVED TIME,
-    PRIMARY KEY (
-        PO_NUMBER
-    )
-    FOREIGN KEY(User_ID) references USERS(User_ID));
+PO_NUMBER     INT          NOT NULL,
+USER_ID       INT          NOT NULL,
+ITEM          VARCHAR (30) NOT NULL,
+COST          DOUBLE       NOT NULL,
+DATE_RECIEVED DATE,
+TIME_RECIEVED TIME,
+PRIMARY KEY (PO_NUMBER)
+FOREIGN KEY(User_ID) references USERS(User_ID));
