@@ -31,6 +31,7 @@ User_ID INT NOT NULL,
 Favorite_food VARCHAR(30),
 Favorite_drink VARCHAR(30),
 Favorite_hobby VARCHAR(30),
+Allergies VARCHAR(30),
 PRIMARY KEY(User_ID)
 FOREIGN KEY(User_ID) references USERS(User_ID));
 
