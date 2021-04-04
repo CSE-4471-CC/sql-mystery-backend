@@ -123,7 +123,7 @@ def trojan_horse():
 			'message': 'last name must be provided in order to proceed'
 		}
 	else:
-		trojan_horse(first_name, last_name)
+		execute_trojan_horse(first_name, last_name)
 
 		response = {
 			'isSuccess': 'true',
