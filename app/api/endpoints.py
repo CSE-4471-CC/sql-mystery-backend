@@ -3,6 +3,9 @@ from app.db import get_db
 from app.helper import *
 
 # lines 5-33 written by Lia Ferguson
+
+NUM_RECORDS_USERS_TABLE = 8
+
 bp = Blueprint('endpoints', __name__, url_prefix='/endpoints')
 
 
@@ -82,6 +85,7 @@ def login_query():
 		match_expected_results = check_expected_results(all_query_results[1], game_step)
 	if len(formatted_query_results) > 0 :
 		if match_expected_results:
+			print_results_to_file(formatted_query_results, game_step)
 			response = {
 				'isQuerySuccessful': 'true',
 				'correctResults': 'true',
@@ -89,11 +93,15 @@ def login_query():
 				'error': ''
 			}
 		else: 
+			if len(table_columns) > len(CORRECT_RESULTS[game_step][0]):
+				error = 'SQL Query returns too much information. Follow the directions and be more specific!'
+			else:
+				error = 'SQL Query was valid but it doesn\'t return the information that you need!'
 			response = {
 				'isQuerySuccessful': 'true',
 				'correctResults': 'false',
 				'results': formatted_query_results,
-				'error': 'SQL Query was valid but it doesn\'t return the information that you need!'
+				'error': error
 			}
 	else:
 		error = error if error != '' else 'SQL Query was valid but there were no matching records returned.'
@@ -103,7 +111,7 @@ def login_query():
 			'results': '',
 			'error': error
 		}
-	print_results_to_file(formatted_query_results, game_step)
+	
 	print(response)
 	return jsonify(response)
 
@@ -140,10 +148,11 @@ def suspect():
 	game_step = request.get_json()['game_step']
 
 	correct = check_suspect(name, game_step)
-	print_results_to_file(name, game_step)
 	
+
 	response = {}
 	if correct:
+		print_results_to_file(name, game_step)
 		response = {
 			'correct': 'true',
 			'message': 'The evidence suggests that this person is a suspect.'

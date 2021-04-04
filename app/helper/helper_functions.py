@@ -10,8 +10,14 @@ QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite
 PURCHASE_ORDERS_COLUMNS = ['PO_NUMBER', 'USER_ID', 'ITEM,COST', 'DATE_RECIEVED', 'TIME_RECIEVED']
 BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_date', 'Building_time', 'User_ID']
 CORRECT_RESULTS = {
-	'S4_B1': [(12592,)],
-	'S4_B2': [(12592, 'steak', 'stand-up comedy', 'coffee', 'almonds')],
+	'S4_B1': [(12592, 'Tony', 'Stark'),
+						(15687, 'Natasha', 'Romanoff'),
+						(15685, 'Scott', 'Lang'),
+						(15972, 'Peter', 'Parker'),
+						(15423, 'Steve', 'Rogers'),
+						(15976, 'Thanos', ''),
+						(17896, 'Bruce', 'Banner')],
+	'S4_B2': [('steak', 'stand-up comedy', 'coffee', 'almonds')],
 	'S5_B1': [(15687, 'almonds'), (17896, 'almonds')],
 	'S5_S': ['Natasha Romanoff', 'Bruce Banner']
 }
@@ -100,23 +106,25 @@ def format_query_results(query_results, table_columns):
 def check_expected_results(query_results, game_step):
 	matches_correct_results = False
 	correct_results = CORRECT_RESULTS[game_step]
+	print(correct_results)
 	correct_results_length = len(correct_results)
 	comparison = [] # index corresponds to record number, 1 = same, 0 = different
 	records = [tuple(y for y in row) for row in query_results]
 	if len(records) == correct_results_length:
-		for i in range (0, correct_results_length):
-			for record in records:
-				sum_match = 0
-				for element in correct_results[i]:
-					if element in record:
-						sum_match += 1				
-				if sum_match == len(record):
-					comparison.append(1)
-				else: 
-					comparison.append(0)
+		for i in range(0, len(records)):
+			sum_match = 0
+			for j in range(0, len(records[0])):
+				if correct_results[i][j] in records[i]:
+					sum_match += 1 
+			if sum_match == len(records[i]):
+				comparison.append(1)
+			else:
+				comparison.append(0)
+		print(comparison)
 		sum_comparison = 0
 		for num in comparison:
 			sum_comparison += num
+		print(sum_comparison)
 		if sum_comparison == len(correct_results):
 			matches_correct_results = True
 	return matches_correct_results
@@ -134,7 +142,7 @@ def print_results_to_file(formatted_results, game_step):
 	f = open(path + 'Clues.txt', 'a')
 	if game_step == 'S4_B1':
 		f.write("STEP 4 CLUES\n")
-		f.write("Tony Stark's User ID\n\n")
+		f.write("Employee User ID\'s\n\n")
 	elif game_step == 'S4_B2':
 		f.write("Tony Stark's Questionnaire Data\n\n")
 	elif game_step == 'S5_B1':
