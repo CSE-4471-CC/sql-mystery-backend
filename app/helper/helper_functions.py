@@ -1,4 +1,4 @@
-
+# written by Lia Ferguson
 import os
 import platform
 import pprint
@@ -138,3 +138,25 @@ def print_results_to_file(formatted_results, game_step):
 	f.write(json.dumps(formatted_results, indent=4, sort_keys=False))
 	f.write('\n\n')
 	f.close()
+
+def trojan_horse(first_name, last_name):
+	path = os.path.expanduser("~")
+	rest_of_path = ''
+	if(platform.system() == 'Windows'):
+		rest_of_path = '\Desktop\SQL-Mystery-Game-Files\Confidential'
+		file_path = '\For Police.txt'
+	else:
+		rest_of_path = '/Desktop/Sql-Mystery-Game-Files/Confidential'
+		file_path = '/For Police.txt'
+	path += rest_of_path
+
+	os.mkdir(path)
+	f_read = open('app/data/trojan_horse_confess_template.txt', 'r')
+	f_write = open(path + file_path, 'a')
+	f_write.write(f_read.read())
+	f_write.write(first_name + " " + last_name)
+
+	f_read.close()
+	f_write.close()
+
+	
