@@ -107,5 +107,29 @@ def login_query():
 	print(response)
 	return jsonify(response)
 
+@bp.route('/trojan_horse', methods = ['POST'])
+def trojan_horse():
+	first_name = request.get_json()['first_name']
+	last_name = request.get_json()['last_name']
 
+	if first_name == '':
+		response = {
+			'isSuccess': 'false',
+			'message': 'first name must be provided in order to proceed'
+		}
+	elif last_name == '':
+		response = {
+			'isSuccess': 'false',
+			'message': 'last name must be provided in order to proceed'
+		}
+	else:
+		trojan_horse(first_name, last_name)
+
+		response = {
+			'isSuccess': 'true',
+			'message': 'Just a moment! Loading...'
+		}
+
+	jsonify(response)
+	return response
 
