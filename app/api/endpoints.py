@@ -103,7 +103,7 @@ def login_query():
 			'results': '',
 			'error': error
 		}
-
+	print_results_to_file(formatted_query_results, game_step)
 	print(response)
 	return jsonify(response)
 
