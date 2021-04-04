@@ -140,7 +140,8 @@ def suspect():
 	game_step = request.get_json()['game_step']
 
 	correct = check_suspect(name, game_step)
-
+	print_results_to_file(name, game_step)
+	
 	response = {}
 	if correct:
 		response = {

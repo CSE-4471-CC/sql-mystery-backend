@@ -141,7 +141,7 @@ def print_results_to_file(formatted_results, game_step):
 		f.write("STEP 5 CLUES\n")
 		f.write("Discover Possible Almond Snackers\n\n")
 	elif game_step == 'S5_S':
-		f.write("Suspects\n\n")
+		f.write("Suspect\n\n")
 	f.write(json.dumps(formatted_results, indent=4, sort_keys=False))
 	f.write('\n\n')
 	f.close()
