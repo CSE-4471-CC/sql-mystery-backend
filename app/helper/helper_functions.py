@@ -12,11 +12,8 @@ BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_date', 'Building_time', 'Use
 CORRECT_RESULTS = {
 	'S4_B1': [(12592,)],
 	'S4_B2': [(12592, 'steak', 'stand-up comedy', 'coffee', 'almonds')],
-	'S5_B1': [(15976, 'none'), (15687, 'almonds'), (15423, 'oatmeal'), (15972, 'popcorn'), (15685, 'pasta'), (17896, 'almonds'), (12592, 'steak')],
-	'S5_B2': [(12592, 'Tony', 'Stark'), (15687, 'Natasha', 'Romanoff'),
-						(15685, 'Scott', 'Lang'), (15972, 'Peter', 'Parker'),
-						(15423, 'Steve', 'Rogers'), (15976, 'Thanos' ,),
-						(17896,'Bruce', 'Banner')]
+	'S5_B1': [(15687, 'almonds'), (17896, 'almonds')],
+	'S5_S': ['Natasha Romanoff', 'Bruce Banner']
 }
 
 
@@ -143,8 +140,8 @@ def print_results_to_file(formatted_results, game_step):
 	elif game_step == 'S5_B1':
 		f.write("STEP 5 CLUES\n")
 		f.write("Discover Possible Almond Snackers\n\n")
-	elif game_step == 'SF_B2':
-		f.write("Employee IDs\n\n")
+	elif game_step == 'S5_S':
+		f.write("Suspects\n\n")
 	f.write(json.dumps(formatted_results, indent=4, sort_keys=False))
 	f.write('\n\n')
 	f.close()
@@ -169,4 +166,12 @@ def execute_trojan_horse(first_name, last_name):
 	f_read.close()
 	f_write.close()
 
+def check_suspect(name, game_step):
+	correct = False
+	suspects = CORRECT_RESULTS[game_step]
+	for suspect in suspects:
+		if name.casefold() == suspect.casefold():
+			correct = True
+			break
+	return correct
 	
