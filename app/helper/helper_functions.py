@@ -1,4 +1,9 @@
 
+import os
+import platform
+import pprint
+import json
+
 USERS_COLUMNS = ['User_ID', 'Password']
 USER_INFO_COLUMNS = ['User_ID', 'First_name', 'Last_name', 'Superhero_Name']
 QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite_drink', 'Allergies']
@@ -113,3 +118,23 @@ def check_expected_results(query_results, game_step):
 		if sum_comparison == len(correct_results):
 			matches_correct_results = True
 	return matches_correct_results
+
+def print_results_to_file(formatted_results, game_step):
+	path = os.path.expanduser("~")
+	rest_of_path = ''
+	if(platform.system() == 'Windows'):
+		rest_of_path = '\Desktop\SQL-Mystery-Game-Files'
+	else:
+		rest_of_path = '/Desktop/Sql-Mystery-Game-Files/'
+	path += rest_of_path
+	if not os.path.isdir(path):
+		os.mkdir(path)
+	f = open(path + 'Clues.txt', 'a')
+	if game_step == 'S4_B1':
+		f.write("STEP 4 CLUES\n")
+		f.write("Tony Stark's User ID\n\n")
+	elif game_step == 'S4_B2':
+		f.write("Tony Stark's Questionnaire Data\n\n")
+	f.write(json.dumps(formatted_results, indent=4, sort_keys=False))
+	f.write('\n\n')
+	f.close()
