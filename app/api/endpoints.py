@@ -133,3 +133,25 @@ def trojan_horse():
 	jsonify(response)
 	return response
 
+
+@bp.route('/suspect', methods = ['POST'])
+def suspect():
+	name = request.get_json()['name']
+	game_step = request.get_json()['game_step']
+
+	correct = check_suspect(name, game_step)
+
+	response = {}
+	if correct:
+		response = {
+			'correct': 'true',
+			'message': 'The evidence suggests that this person is a suspect.'
+		}
+	else:
+		response = {
+			'correct': 'false',
+			'message': 'There isn\'t enough evidence for this person to be a suspect.'
+		}		
+
+	jsonify(response)
+	return response
