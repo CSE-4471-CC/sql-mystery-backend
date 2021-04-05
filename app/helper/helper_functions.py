@@ -1,4 +1,4 @@
-# written by Lia Ferguson
+# written by Lia Ferguson, Edited By Andrew Fecher
 import os
 import platform
 import pprint

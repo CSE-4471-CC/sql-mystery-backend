@@ -84,7 +84,7 @@ def login_query():
 		formatted_query_results =''
 		try:
 			table_columns = queried_table_columns(commands[1])
-			formatted_query_results = format_query_results(all_query_results[1], table_columns)
+			formatted_query_results = format_query_results(all_query_results[1], table_columns, game_step)
 		except Exception as e:
 			print(e)
 			formatted_query_results = 'ERROR'
