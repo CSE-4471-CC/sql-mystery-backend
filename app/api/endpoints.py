@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, request, jsonify;
 from app.db import get_db
 from app.helper import *
+import json
 
 # lines 5-33 written by Lia Ferguson
 
@@ -79,8 +80,13 @@ def login_query():
 		error = e.args
 
 	if error == '':
-		table_columns = queried_table_columns(commands[1])
-		formatted_query_results = format_query_results(all_query_results[1], table_columns, game_step)
+		formatted_query_results =''
+		try:
+			table_columns = queried_table_columns(commands[1])
+			formatted_query_results = format_query_results(all_query_results[1], table_columns)
+		except Exception as e:
+			print(e)
+			formatted_query_results = 'ERROR'
 		match_expected_results = check_expected_results(all_query_results[1], game_step)
 	if len(formatted_query_results) > 0 :
 		if match_expected_results:
@@ -88,7 +94,7 @@ def login_query():
 			response = {
 				'isQuerySuccessful': 'true',
 				'correctResults': 'true',
-				'results': formatted_query_results,
+				'results': json.dumps(formatted_query_results),
 				'error': ''
 			}
 		else: 
@@ -99,7 +105,7 @@ def login_query():
 			response = {
 				'isQuerySuccessful': 'true',
 				'correctResults': 'false',
-				'results': formatted_query_results,
+				'results': json.dumps(formatted_query_results),
 				'error': error
 			}
 	else:
