@@ -10,6 +10,7 @@ QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite
 PURCHASE_ORDERS_COLUMNS = ['PO_NUMBER', 'USER_ID', 'ITEM,COST', 'DATE_RECIEVED', 'TIME_RECIEVED']
 BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_date', 'Building_time', 'User_ID']
 CORRECT_RESULTS = {
+	'S3_B1': [('BUILDING_ACCESS',), ('COMPUTER_ACCESS',), ('COMPUTER_TERMINALS',), ('QUESTIONNAIRE',), ('USER_INFO',), ('USERS',), ('PURCHASE_ORDERS',)],
 	'S4_B1': [(12592, 'Tony', 'Stark'),
 						(15687, 'Natasha', 'Romanoff'),
 						(15685, 'Scott', 'Lang'),
@@ -19,7 +20,8 @@ CORRECT_RESULTS = {
 						(17896, 'Bruce', 'Banner')],
 	'S4_B2': [('steak', 'stand-up comedy', 'coffee', 'almonds')],
 	'S5_B1': [(15687, 'almonds'), (17896, 'almonds')],
-	'S5_S': ['Natasha Romanoff', 'Bruce Banner']
+	'S5_S': ['Natasha Romanoff', 'Bruce Banner'],
+	'S6_B1': [('Building_ID',), ('Building_date',), ('Building_time',), ('User_ID',)]
 }
 
 
@@ -88,19 +90,29 @@ def queried_table_columns(query):
 				columns.append(columns_and_indices[index])
 	return columns
 
-def format_query_results(query_results, table_columns):
+def format_query_results(query_results, table_columns, game_step):
 	formatted_results = []
 	matches_correct_results = False
 	records = [tuple(y for y in row) for row in query_results]
 	print(records)
-	for record in records:
+	if len(table_columns) == 0:
+		r = []
+		for record in records:
+			r.append(record[0])
 		format_record = {}
-		i = 0
-		for item in record:
-			format_record[table_columns[i]] = item
-			i += 1
+		if game_step == 'S6_B1':
+			format_record['Columns'] = r
+		elif game_step == 'S3_B1':
+			format_record['Tables'] = r
 		formatted_results.append(format_record)
-			
+	else:
+		for record in records:
+			format_record = {}
+			i = 0
+			for item in record: 
+				format_record[table_columns[i]] = item
+				i += 1
+			formatted_results.append(format_record)			
 	return formatted_results
 
 def check_expected_results(query_results, game_step):

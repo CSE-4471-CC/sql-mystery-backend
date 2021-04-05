@@ -80,8 +80,7 @@ def login_query():
 
 	if error == '':
 		table_columns = queried_table_columns(commands[1])
-		print(table_columns)
-		formatted_query_results = format_query_results(all_query_results[1], table_columns)
+		formatted_query_results = format_query_results(all_query_results[1], table_columns, game_step)
 		match_expected_results = check_expected_results(all_query_results[1], game_step)
 	if len(formatted_query_results) > 0 :
 		if match_expected_results:
