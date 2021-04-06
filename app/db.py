@@ -1,6 +1,7 @@
+# Written by Lia Ferguson
 # lines 4 - 30 and 41-62 are generic code used from flask documentation to set up a sqlite database instance 
 # source link: https://flask.palletsprojects.com/en/1.1.x/tutorial/database/
-# lines starting at 30 are original code 
+# lines 34 is original code 
 import sqlite3 
 import click
 from flask import current_app, g
