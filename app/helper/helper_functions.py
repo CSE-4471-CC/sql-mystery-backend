@@ -175,7 +175,7 @@ def print_results_to_file(formatted_results, game_step):
 	path = os.path.expanduser("~")
 	rest_of_path = ''
 	clues = ''
-	if(platform.system() == 'Windows'):
+	if platform.system() == 'Windows':
 		rest_of_path = '\Desktop\SQL-Mystery-Game-Files'
 		clues='\Clues.txt'
 	else:
