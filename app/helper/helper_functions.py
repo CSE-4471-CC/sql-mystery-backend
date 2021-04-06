@@ -1,15 +1,23 @@
-# written by Lia Ferguson, Edited By Andrew Fecher
+""" code written by Lia Ferguson:
+		all code besides the code written by Andrew Fecher
+"""
+"""code written by Andrew Fecher:
+		line 18, lines 106-117
+"""
+# Edited By Andrew Fecher
 import os
 import platform
 import pprint
 import json
 
+# Data structures to hold columns of data tab;es
 USERS_COLUMNS = ['User_ID', 'Password']
 USER_INFO_COLUMNS = ['User_ID', 'First_name', 'Last_name', 'Superhero_Name']
 QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite_drink', 'Allergies']
 PURCHASE_ORDERS_COLUMNS = ['Po_number', 'User_ID', 'Item', 'Cost',  'Time_Received']
 BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_time', 'User_ID']
 SQLITE_MASTER_COLUMNS = ['type', 'name', 'tabl_name', 'rootpage', 'sql']
+#Data structure to hold expected SQL Results
 CORRECT_RESULTS = {
 	'S3_B1': [('BUILDING_ACCESS',), ('QUESTIONNAIRE',), ('USER_INFO',), ('USERS',), ('PURCHASE_ORDERS',)],
 	'S4_B1': [(12592, 'Tony', 'Stark'),
@@ -33,7 +41,7 @@ CORRECT_RESULTS = {
 	'S7_B2': [(15976, 'IAmInevitable')]
 }
 
-
+# Parses out columns that are involved in the SQL Injection Query passed in by player
 def queried_table_columns(query):
 	columns = []
 	columns_and_indices = {} # list that keeps track of column ordering in the query
@@ -112,6 +120,8 @@ def queried_table_columns(query):
 
 	return columns
 
+# Formats query results nicely from sqlite3 data structures into dictionaries 
+# for later JSON parsing
 def format_query_results(query_results, table_columns, game_step):
 	formatted_results = []
 	records = [tuple(y for y in row) for row in query_results]
@@ -132,6 +142,8 @@ def format_query_results(query_results, table_columns, game_step):
 			formatted_results.append(format_record)			
 	return formatted_results
 
+# check whether or not returned records from 
+# SQL query match the expected output
 def check_expected_results(query_results, game_step):
 	matches_correct_results = False
 	correct_results = CORRECT_RESULTS[game_step]
@@ -157,6 +169,8 @@ def check_expected_results(query_results, game_step):
 			matches_correct_results = True
 	return matches_correct_results
 
+# Print results of SQL Injection to Clues.txt file to 
+# assist player with game play
 def print_results_to_file(formatted_results, game_step):
 	path = os.path.expanduser("~")
 	rest_of_path = ''
@@ -182,6 +196,8 @@ def print_results_to_file(formatted_results, game_step):
 	f.write('\n\n')
 	f.close()
 
+# execute "trojan horse" - download
+# confession file onto player's computer with their name filled in
 def execute_trojan_horse(first_name, last_name):
 	path = os.path.expanduser("~")
 	rest_of_path = ''
@@ -202,6 +218,7 @@ def execute_trojan_horse(first_name, last_name):
 	f_read.close()
 	f_write.close()
 
+# verify if the suspect entered by player is correct
 def check_suspect(name, game_step):
 	correct = False
 	suspects = CORRECT_RESULTS[game_step]

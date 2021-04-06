@@ -3,7 +3,14 @@ from app.db import get_db
 from app.helper import *
 import json
 
-# lines 5-33 written by Lia Ferguson
+""" endpoints written by Lia Ferguson:
+		/login_bypass
+		/login_query
+		/trojan_horse
+		/suspect
+		/login
+		with the exception of the two try - except and json.dumps() lines written by Andrew Fecher
+"""
 
 NUM_RECORDS_USERS_TABLE = 8
 
@@ -29,7 +36,8 @@ def login_bypass():
 	else:
 		quote = "\""
 	
-	login_q = 'SELECT * FROM USERS WHERE User_ID = {quote}{u_id} AND Password = {pwd}'.format(quote=quote, u_id = user_id, pwd = password)
+	login_q = 'SELECT * FROM USERS WHERE User_ID = {quote}{u_id} AND Password = {pwd}'.format(
+							quote=quote, u_id = user_id, pwd = password)
 
 	query_result = database.execute(login_q).fetchall()
 	response = {}
@@ -68,7 +76,8 @@ def login_query():
 	else:
 		quote = "\""
 	
-	login_q = 'SELECT * FROM USERS WHERE User_ID = {quote}{u_id} AND Password = {quote}{pwd}'.format(quote=quote, u_id = user_id, pwd = password)
+	login_q = 'SELECT * FROM USERS WHERE User_ID = {quote}{u_id} AND Password = {quote}{pwd}'.format(
+							quote=quote, u_id = user_id, pwd = password)
 
 	commands = login_q.split(";", -1)
 	all_query_results = []
