@@ -1,4 +1,4 @@
-# written by Lia Ferguson
+# written by Lia Ferguson, Edited By Andrew Fecher
 import os
 import platform
 import pprint
@@ -9,6 +9,7 @@ USER_INFO_COLUMNS = ['User_ID', 'First_name', 'Last_name', 'Superhero_Name']
 QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite_drink', 'Allergies']
 PURCHASE_ORDERS_COLUMNS = ['Po_number', 'User_ID', 'Item', 'Cost',  'Time_Received']
 BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_time', 'User_ID']
+SQLITE_MASTER_COLUMNS = ['type', 'name', 'tabl_name', 'rootpage', 'sql']
 CORRECT_RESULTS = {
 	'S3_B1': [('BUILDING_ACCESS',), ('QUESTIONNAIRE',), ('USER_INFO',), ('USERS',), ('PURCHASE_ORDERS',)],
 	'S4_B1': [(12592, 'Tony', 'Stark'),
@@ -96,6 +97,19 @@ def queried_table_columns(query):
 			indices.sort()
 			for index in indices:
 				columns.append(columns_and_indices[index])
+	elif query.casefold().find('sqlite_master') != -1:
+		if query.find('*') != -1:
+			columns = SQLITE_MASTER_COLUMNS
+		else:
+			for column in SQLITE_MASTER_COLUMNS:
+				query = query.casefold().partition('from')[0]
+				if query.find(column.casefold()) != -1:
+					columns_and_indices[query.find(column.casefold())] = column
+			indices = list(columns_and_indices.keys())
+			indices.sort()
+			for index in indices:
+				columns.append(columns_and_indices[index])
+
 	return columns
 
 def format_query_results(query_results, table_columns, game_step):
