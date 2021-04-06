@@ -1,5 +1,5 @@
 --Written by Tom Chmura
---small updates to USER_INFO and QUESTIONNAIRE tables by Lia Ferguson
+--small updates to USER_INFO, QUESTIONNAIRE, BUILDING_ACCESS, and PURCHASE_ORDERS tables by Lia Ferguson
 
 -- Table: BUILDING_ACCESS
 CREATE TABLE BUILDING_ACCESS(
