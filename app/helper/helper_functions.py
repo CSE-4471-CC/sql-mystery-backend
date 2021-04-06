@@ -7,10 +7,10 @@ import json
 USERS_COLUMNS = ['User_ID', 'Password']
 USER_INFO_COLUMNS = ['User_ID', 'First_name', 'Last_name', 'Superhero_Name']
 QUESTIONNAIRE_COLUMNS = ['User_ID', 'Favorite_food', 'Favorite_hobby', 'Favorite_drink', 'Allergies']
-PURCHASE_ORDERS_COLUMNS = ['PO_NUMBER', 'USER_ID', 'ITEM,COST', 'DATE_RECIEVED', 'TIME_RECIEVED']
-BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_date', 'Building_time', 'User_ID']
+PURCHASE_ORDERS_COLUMNS = ['Po_number', 'User_ID', 'Item', 'Cost',  'Time_Received']
+BUILDING_ACCESS_COLUMNS = ['Building_ID', 'Building_time', 'User_ID']
 CORRECT_RESULTS = {
-	'S3_B1': [('BUILDING_ACCESS',), ('COMPUTER_ACCESS',), ('COMPUTER_TERMINALS',), ('QUESTIONNAIRE',), ('USER_INFO',), ('USERS',), ('PURCHASE_ORDERS',)],
+	'S3_B1': [('BUILDING_ACCESS',), ('QUESTIONNAIRE',), ('USER_INFO',), ('USERS',), ('PURCHASE_ORDERS',)],
 	'S4_B1': [(12592, 'Tony', 'Stark'),
 						(15687, 'Natasha', 'Romanoff'),
 						(15685, 'Scott', 'Lang'),
@@ -21,7 +21,15 @@ CORRECT_RESULTS = {
 	'S4_B2': [('steak', 'stand-up comedy', 'coffee', 'almonds')],
 	'S5_B1': [(15687, 'almonds'), (17896, 'almonds')],
 	'S5_S': ['Natasha Romanoff', 'Bruce Banner'],
-	'S6_B1': [('Building_ID',), ('Building_date',), ('Building_time',), ('User_ID',)]
+	'S6_B1': [('Building_ID',), ('Building_time',), ('User_ID',)],
+	'S6_B2': [(15687, '12:55 pm'), (17896, '12:40 pm')],
+	'S6_B3': [(15972, '10:30 am'), (15976, '11:00 am')],
+	'S6_S': ['Peter Parker', 'Thanos'],
+	'S7_B1': [(156834, 15972, 'Coffee Creamer', 5.12, '5:00 pm'),
+						(156853, 15976, 'Almond Coffee Creamer', 5.23, '5:00 pm'), 
+						(438657, 15972, 'Popcorn', 10.25,'12:00pm')],
+	'S7_S': ['Thanos'],
+	'S7_B2': [(15976, 'IAmInevitable')]
 }
 
 
@@ -92,7 +100,6 @@ def queried_table_columns(query):
 
 def format_query_results(query_results, table_columns, game_step):
 	formatted_results = []
-	matches_correct_results = False
 	records = [tuple(y for y in row) for row in query_results]
 	print(records)
 	if len(table_columns) == 0:
@@ -109,7 +116,7 @@ def format_query_results(query_results, table_columns, game_step):
 		for record in records:
 			format_record = {}
 			i = 0
-			for item in record: 
+			for item in record:
 				format_record[table_columns[i]] = item
 				i += 1
 			formatted_results.append(format_record)			
@@ -118,7 +125,6 @@ def format_query_results(query_results, table_columns, game_step):
 def check_expected_results(query_results, game_step):
 	matches_correct_results = False
 	correct_results = CORRECT_RESULTS[game_step]
-	print(correct_results)
 	correct_results_length = len(correct_results)
 	comparison = [] # index corresponds to record number, 1 = same, 0 = different
 	records = [tuple(y for y in row) for row in query_results]
