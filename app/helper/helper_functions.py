@@ -117,15 +117,11 @@ def format_query_results(query_results, table_columns, game_step):
 	records = [tuple(y for y in row) for row in query_results]
 	print(records)
 	if len(table_columns) == 0:
-		r = []
 		for record in records:
-			r.append(record[0])
-		format_record = {}
-		if game_step == 'S6_B1':
-			format_record['Columns'] = r
-		elif game_step == 'S3_B1':
-			format_record['Tables'] = r
-		formatted_results.append(format_record)
+			format_record = {}
+			if game_step == 'S6_B1':
+				format_record['Column'] = record[0]
+			formatted_results.append(format_record)
 	else:
 		for record in records:
 			format_record = {}
