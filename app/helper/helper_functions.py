@@ -160,14 +160,17 @@ def check_expected_results(query_results, game_step):
 def print_results_to_file(formatted_results, game_step):
 	path = os.path.expanduser("~")
 	rest_of_path = ''
+	clues = ''
 	if(platform.system() == 'Windows'):
 		rest_of_path = '\Desktop\SQL-Mystery-Game-Files'
+		clues='\Clues.txt'
 	else:
 		rest_of_path = '/Desktop/Sql-Mystery-Game-Files/'
+		clues='Clues.txt'
 	path += rest_of_path
 	if not os.path.isdir(path):
 		os.mkdir(path)
-	f = open(path + 'Clues.txt', 'a')
+	f = open(path + clues, 'a')
 	if game_step == 'S4_B1':
 		f.write("STEP 4 CLUES\n")
 		f.write("Employee User ID\'s\n\n")
