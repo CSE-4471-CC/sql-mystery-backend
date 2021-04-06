@@ -118,7 +118,7 @@ def login_query():
 			'results': '',
 			'error': error
 		}
-	
+	print(json.dumps(formatted_query_results))
 	print(response)
 	return jsonify(response)
 
