@@ -50,6 +50,7 @@ def login_bypass():
 	print(user_id)
 	return jsonify(response)
 
+# endpoint for all SQL Injection after step 1
 @bp.route('/login_query', methods = ['POST'])
 def login_query():
 	database = get_db()
@@ -89,7 +90,7 @@ def login_query():
 			print(e)
 			formatted_query_results = 'ERROR'
 		match_expected_results = check_expected_results(all_query_results[1], game_step)
-	if len(formatted_query_results) > 0 :
+	if len(formatted_query_results) > 0:
 		if match_expected_results:
 			print_results_to_file(formatted_query_results, game_step)
 			response = {
@@ -121,6 +122,7 @@ def login_query():
 	print(response)
 	return jsonify(response)
 
+# endpoint to trigger trojan horse process in step 5
 @bp.route('/trojan_horse', methods = ['POST'])
 def trojan_horse():
 	first_name = request.get_json()['first_name']
@@ -147,7 +149,7 @@ def trojan_horse():
 	jsonify(response)
 	return response
 
-
+# endpoint that processes submission of suspect guesses
 @bp.route('/suspect', methods = ['POST'])
 def suspect():
 	name = request.get_json()['name']
@@ -171,3 +173,56 @@ def suspect():
 
 	jsonify(response)
 	return response
+
+# endpoint that processes normal login in final step of the game
+@bp.route('/login', methods = ['POST'])
+def login():
+	database = get_db()
+
+	user_id = request.get_json()['user_id']
+	password = request.get_json()['password']
+	response = {}
+	if user_id == '':
+		response = {
+			'isLoginSuccessful': 'false',
+			'error': 'You must provide a username'
+		}
+	elif password == '':
+		response = {
+			'isLoginSuccessful': 'false',
+			'error': 'You must provide a password'
+		}
+
+	quote = ""
+	formatted_password = ''
+	if user_id.find("\"") == -1 and user_id.find('\'') == -1:
+		user_id = "\"" + user_id + "\""
+		formatted_password = "\"" + password + "\""
+	elif user_id.find('\'') != -1:
+		quote = "\'"
+	else:
+		quote = "\""
+	
+	login_q = 'SELECT * FROM USERS WHERE User_ID = {quote}{u_id}'.format(quote=quote, u_id = user_id)
+	query_result = database.execute(login_q).fetchone()
+	record = tuple(y for y in query_result)
+	print(record)
+	if len(query_result) == 0:
+		response = {
+			'isLoginSuccessful': 'false',
+			'error': 'Invalid username provided'
+		}
+	else:
+		if password == record[1]:
+			response = {
+				'isLoginSuccessful': 'true',
+				'error': ''
+			}
+		else:
+			response =  {
+				'isLoginSuccessful': 'false',
+				'error': 'Invalid password provided'
+			}
+	print(response)
+	return response
+
